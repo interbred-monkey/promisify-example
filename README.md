@@ -248,3 +248,5 @@ asPromised('foo', 'bar')
 .catch(console.log);
 
 ```
+
+*The eagle eyed amongst you might of noticed that I mixed arrow functions with normal function declarations. There is a reason for this and that is, arrow functions do not have their own scope. What this means is that you cannot `bind` to an arrow function, nor does it have it's own `arguments` or `this`. When you use those fields inside an arrow function they are inherited from the encompassing function, or undefined.
