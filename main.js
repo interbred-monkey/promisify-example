@@ -8,15 +8,15 @@ function hasCallback(p1, p2, callback) {
     console.log(p1);
     console.log(p2);
 
-    return callback(null, {'success': true});
+    return callback(null, {'p1': p1, 'p2': p2});
 
   }, 1000);
 
 }
 
 // I will work, promise I will
-let a = promisify(hasCallback);
-a('hello', 'there')
+let asPromised = promisify(hasCallback);
+asPromised('foo', 'bar')
 .then((data) => {
 
   console.log(JSON.stringify(data, null, 2));

@@ -1,20 +1,18 @@
-const _ = require('lodash/core');
-
 function promisify(fn) {
 
   return function() {
 
     return new Promise((resolve, reject) => {
 
-      this.fn(...arguments, function() {
+      this.fn(...arguments, function(err, data) {
 
-        if (!_.isNull(arguments[0])) {
+        if (!_.isNull(err)) {
 
-          return reject(arguments[0]);
+          return reject(err);
 
         }
 
-        return resolve(...[...arguments].slice(1));
+        return resolve(data);
 
       })
 
