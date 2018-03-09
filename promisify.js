@@ -6,7 +6,7 @@ function promisify(fn) {
 
       this.fn(...arguments, function(err, data) {
 
-        if (!_.isNull(err)) {
+        if (err !== null) {
 
           return reject(err);
 
