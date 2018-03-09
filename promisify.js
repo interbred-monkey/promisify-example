@@ -16,7 +16,6 @@ function promisify(fn) {
 
       })
 
-
     })
 
   }.bind({fn: fn});
