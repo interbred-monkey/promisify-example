@@ -4,7 +4,7 @@ function promisify(fn) {
 
     return new Promise((resolve, reject) => {
 
-      this.fn(...arguments, function(err, data) {
+      fn(...arguments, function(err, data) {
 
         if (err !== null) {
 
@@ -18,7 +18,7 @@ function promisify(fn) {
 
     })
 
-  }.bind({fn: fn});
+  };
 
 }
 

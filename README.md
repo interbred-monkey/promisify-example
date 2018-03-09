@@ -111,9 +111,9 @@ function promisify(fn) {
 
     return new Promise((resolve, reject) => {
 
-      this.fn(...arguments, function(err, data) {
+      fn(...arguments, function(err, data) {
 
-        if (!_.isNull(err)) {
+        if (err !== null) {
 
           return reject(err);
 
@@ -125,7 +125,7 @@ function promisify(fn) {
 
     })
 
-  }.bind({fn: fn});
+  };
 
 }
 
@@ -146,19 +146,17 @@ In the promisify function this is then referenced by `fn`.
 function promisify(fn) {
 ```
 
-The next thing we do is to return a _"new"_ function and bind the _"old"_ asynchronous function to it. This means, when the _"new"_ function executes it will be able to access an instance of the original function.
+The next thing we do is to return a _"new"_ function that returns a promise and executes the _"old"_ asynchronous function.
 
 ```
 return function() {
 
 ...
 
-}.bind({fn: fn});
+};
 ```
 
-Put more simply, we are creating a new function that will execute the old one.
-
-When we execute the function...
+Put more simply, when we execute the function...
 
 ```
 asPromised('foo', 'bar')
@@ -173,9 +171,9 @@ function() {
 
 ```
 
-The next thing we need to address is that we are passing parameters to the function, how are they accessed?
+The next thing we need to address here is, we are passing parameters to the function, how are they accessed?
 
-A function* that is executed has an arguments parameter, which is global to that function, a bit like `this`. For example:
+A function* that is executed has an `arguments` parameter, which is global to that function, a bit like `this`. For example:
 
 ```
 function a(p1, p2) {
@@ -191,10 +189,22 @@ The above would output `true`, because the parameters passed to the function are
 
 In our example we use the arguments array so that we can call the originally defined function (`fn`), supplying it with the same parameters it is expecting.
 
-If you you remember we bound `fn` to the new function so we can access it by the `this` parameter. We can also de-structure the arguments array so that they are passed into the function declaration variables by using the spread operator.
+```
+function promisify(fn) {
+
+  return function() {
+
+    return new Promise((resolve, reject) => {
+
+      fn(...arguments, function(err, data) {
+```
+
+The `fn` is still accessible once the parent function has executed because of JavaScript "closure". Closure means that any variables that have been passed to the function that has already executed they still live on in anything defined while executing that function. More information about closures, hoisting and other things can be found [here](https://www.sitepoint.com/demystifying-javascript-closures-callbacks-iifes/).
+
+We also de-structure the arguments array so that they are passed into the function declaration variables by using the spread operator(**...**)
 
 ```
-this.fn(...arguments, function(err, data) {
+fn(...arguments, function(err, data) {
 ```
 
 Everything here on in is self explanatory...
