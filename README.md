@@ -259,6 +259,6 @@ asPromised('foo', 'bar')
 
 ```
 
-If you are interested in learning more about the original promisify declaration added to the util library of node, here is a [link](https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original).
+If you are interested in learning more about the original promisify functionality added to the util library of node, here is a [link](https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original).
 
 *The eagle eyed amongst you might of noticed that I mixed arrow functions with normal function declarations. There is a reason for this and that is, arrow functions do not have their own scope. What this means is that you cannot `bind` to an arrow function, nor does it have it's own `arguments` or `this`. When you use those fields inside an arrow function they are inherited from the encompassing function, or undefined.
