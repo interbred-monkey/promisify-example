@@ -1,6 +1,6 @@
 # Promisify explanation
 
-_Disclaimer_: I'm not sure how the guys at Node are doing it but if I had to do it, this is how I would go about it. This example leverages native promises and therefore will require **Node v0.12.18** and higher.
+__Disclaimer__: I'm not sure how the guys at Node are doing it but if I had to do it, this is how I would go about it. This example leverages native promises and therefore will require support for promises. I would suggest the LTS version of Node (at time of writing this is 8.11.1).
 
 ## How to run
 This is a very simple example, you can see it in action by executing:
@@ -33,7 +33,7 @@ function hasCallback(p1, p2, callback) {
 
 In this instance all we are doing here is displaying messages after a timeout, depending on the values that have been supplied to the function. This could be anything that is asynchronous, like returning data from a database.
 
-We then move onto initialising the asynchronous function into a a promise by passing it to our library.
+We then move onto initialising the asynchronous function into a promise by passing it to our library.
 
 `let asPromised = promisify(hasCallback);`
 
@@ -49,7 +49,7 @@ asPromised('foo', 'bar')
   console.log('I kept my promise');
 
 })
-.catch(console.log);
+.catch(console.error);
 ```
 
 As you can see I am passing it two values that will be passed through to the original function `'foo', 'bar'` and when running the example we will see the output:
@@ -258,5 +258,7 @@ asPromised('foo', 'bar')
 .catch(console.log);
 
 ```
+
+If you are interested in learning more about the original promisify declaration added to the util library of node, here is a [link](https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original).
 
 *The eagle eyed amongst you might of noticed that I mixed arrow functions with normal function declarations. There is a reason for this and that is, arrow functions do not have their own scope. What this means is that you cannot `bind` to an arrow function, nor does it have it's own `arguments` or `this`. When you use those fields inside an arrow function they are inherited from the encompassing function, or undefined.
